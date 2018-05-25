@@ -1,5 +1,5 @@
 # Django搭建Blog可以参考这里 https://www.cnblogs.com/fnng/p/3737964.html
-# 项目目录介绍
+## 项目目录介绍
 ### blog /
 ### admin.py  :  django 自带admin后面管理，将models.py 中表映射到后台。
 ### apps.py :  blog 应用的相关配置。
