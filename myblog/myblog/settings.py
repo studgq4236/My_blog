@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'comments',
     # 'DjangoUeditor',
 ]
 
@@ -65,6 +66,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries' :{
+                'blog_tags':'blog.templatetags.blog_tags'
+            },
         },
     },
 ]

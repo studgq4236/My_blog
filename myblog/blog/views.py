@@ -4,8 +4,10 @@ from blog.models import Post
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
+from comments.forms import Comment
+
 def index(request):
-    return HttpResponse("欢迎访问我的博客首页！")
+    return HttpResponse("欢迎二狗访问我的博客！")
 
 # Create your views here.
 
@@ -16,9 +18,17 @@ def blog_index(request):
 
 def index(request):
     return render(request,'blog/index.html',context= {
-    	'title':'我的博客首页',
-    	'welcome':'欢迎访问我的博客首页！',
+    	'title':'我的博客',
+    	'welcome':'欢迎二狗访问我的博客！',
     	})
+
+
+
+def archives(request,year,month):
+	post_list = Post.objects.filter(created_time__year=year,
+									created_time__month=month,
+		).order_by('-created_time')
+	return render(request,'blog/index.html',context={'post_list':post_list})
 
 
 def detail(request,pk):
@@ -33,4 +43,20 @@ def detail(request,pk):
 			#允许自动生成文件目录
 			'markdown.extensions.toc',
 			])
-	return render(request,'blog/detail.html',context={'post':post})
+	form = CommentForm()
+	#获取文章post下的所有评论
+	comment_list = post.comment_set.all()
+	#将文章、表单以及文章下的评论列表作为模板变量传给detail.html模板。以便渲染数据
+	context = {
+		'post':post,
+		'form':form,
+		'comment_list':comment_list,
+	}
+
+	return render(request,'blog/detail.html',context=context)
+
+
+def category(request,pk):
+	cate = get_object_or_404(Category,pk=pk)
+	post_list = Post.objects.filter(category=cate).order_by('-created_time')
+	return render(request,'blog/index.html',context={'post_list':post_list})

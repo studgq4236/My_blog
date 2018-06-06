@@ -26,6 +26,7 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/',views.blog_index),
-    path('',include('blog.urls'))
+    path('',include('blog.urls')),
+    path('',include('comments.urls')),
 #     path('ueditor/',include(DjangoUeditor_urls)),
 ]
